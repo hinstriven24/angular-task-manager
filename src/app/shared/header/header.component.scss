@@ -1,0 +1,33 @@
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: saturate(160%) blur(8px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  .brand-text {
+    font-weight: 600;
+    letter-spacing: .2px;
+  }
+}
+
+.spacer { flex: 1 1 auto; }
+
+.nav-links a.active {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.hide-mobile { display: flex; }
+.hide-desktop { display: none; }
+
+@media (max-width: 768px) {
+  .hide-mobile { display: none; }
+  .hide-desktop { display: inline-flex; }
+}

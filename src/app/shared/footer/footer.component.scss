@@ -1,0 +1,14 @@
+.app-footer {
+  margin-top: 24px;
+  justify-content: center;
+  border-top: 1px solid rgba(0, 0, 0, .06);
+}
+
+.spacer { flex: 1 1 auto; }
+:host, app-root, body, html { min-height: 100%; height: 100%; }
+app-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+main.container { flex: 1 0 auto; }

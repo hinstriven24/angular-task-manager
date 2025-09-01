@@ -1,0 +1,34 @@
+<mat-toolbar color="primary" class="app-toolbar">
+  <!-- Mobile menu -->
+  <button class="hide-desktop" mat-icon-button [matMenuTriggerFor]="navMenu" aria-label="Open menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <!-- Brand -->
+  <span class="brand">
+    <mat-icon>task_alt</mat-icon>
+    <span class="brand-text">Task Manager</span>
+  </span>
+
+  <span class="spacer"></span>
+
+  <!-- Desktop nav -->
+  <nav class="nav-links hide-mobile">
+    <a mat-button routerLink="/tasks" routerLinkActive="active">Tasks</a>
+    <a mat-stroked-button color="accent" routerLink="/tasks/add">
+      <mat-icon>add</mat-icon>
+      Add Task
+    </a>
+  </nav>
+</mat-toolbar>
+
+<mat-menu #navMenu="matMenu">
+  <button mat-menu-item routerLink="/tasks">
+    <mat-icon>checklist</mat-icon>
+    <span>Tasks</span>
+  </button>
+  <button mat-menu-item routerLink="/tasks/add">
+    <mat-icon>add</mat-icon>
+    <span>Add Task</span>
+  </button>
+</mat-menu>

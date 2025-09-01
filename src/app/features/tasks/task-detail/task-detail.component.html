@@ -1,0 +1,9 @@
+<mat-card *ngIf="task">
+  <mat-card-title>{{ task.title }}</mat-card-title>
+  <mat-card-content>
+    <p>{{ task.description }}</p>
+    <p>Due: {{ task.dueDate | date }}</p>
+    <p>Status: {{ task.completed ? 'Completed' : 'Pending' }}</p>
+  </mat-card-content>
+  <button mat-raised-button color="primary" routerLink="/tasks">Back</button>
+</mat-card>

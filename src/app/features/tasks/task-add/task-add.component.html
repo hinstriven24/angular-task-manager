@@ -1,0 +1,8 @@
+<mat-card>
+  <mat-card-title>Add Task</mat-card-title>
+  <app-task-form
+    [submitLabel]="'Create'"
+    (formSubmit)="addTask($event)"
+    (cancel)="cancel()"
+  ></app-task-form>
+</mat-card>

@@ -1,0 +1,9 @@
+<mat-card *ngIf="task">
+  <mat-card-title>Edit Task</mat-card-title>
+  <app-task-form
+    [initialTask]="task"
+    [submitLabel]="'Update'"
+    (formSubmit)="updateTask($event)"
+    (cancel)="cancel()"
+  ></app-task-form>
+</mat-card>
