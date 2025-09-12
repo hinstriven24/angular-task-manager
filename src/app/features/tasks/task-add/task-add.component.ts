@@ -1,30 +1,43 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+
 import { TaskService } from '../task.service';
 import { TaskFormComponent } from '../task-form/task-form.component';
 import { Task } from '../models/task.model';
-import { MatCardModule } from "@angular/material/card";
-import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-task-add',
   standalone: true,
-  imports: [CommonModule, TaskFormComponent, MatCardModule],
+  imports: [CommonModule, MatCardModule, TaskFormComponent],
   templateUrl: './task-add.component.html',
-  styleUrls: ['./task-add.component.scss']
+  styleUrl: './task-add.component.scss',
 })
 export class TaskAddComponent {
   constructor(private taskService: TaskService, private router: Router) {}
 
-  addTask(task: Task): void {
-    task.id = uuidv4();
-    this.taskService.addTask(task).subscribe(() => {
+  addTask(task: Omit<Task, 'id'>): void {
+    // 确保 dueDate 是字符串
+    const dueDate = typeof task.dueDate === 'string'
+      ? task.dueDate
+      : new Date(task.dueDate).toISOString();
+
+    const payload: Omit<Task, 'id'> = {
+      ...task,
+      dueDate,
+      // 确保其他字段有默认值
+      title: task.title ?? '',
+      description: task.description ?? '',
+      completed: !!task.completed
+    };
+
+    this.taskService.addTask(payload).subscribe(() => {
       this.router.navigate(['/tasks']);
     });
   }
 
-  cancel() {
+  cancel(): void {
     this.router.navigate(['/tasks']);
   }
 }

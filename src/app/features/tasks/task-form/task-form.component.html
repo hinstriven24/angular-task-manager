@@ -16,6 +16,14 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
+  <mat-form-field appearance="fill">
+  <mat-label>Status</mat-label>
+  <mat-select formControlName="completed">
+    <mat-option [value]="false">⏳ Pending</mat-option>
+    <mat-option [value]="true">✅ Done</mat-option>
+  </mat-select>
+</mat-form-field>
+
   <div class="actions">
     <button mat-raised-button color="primary" type="submit">
       {{ submitLabel }}

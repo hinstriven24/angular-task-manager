@@ -3,12 +3,19 @@
 
   <button routerLink="/tasks/add" class="add-btn">+ Add Task</button>
 
-  <div *ngIf="tasks.length === 0; else taskList">
+  <!-- Loading 状态 -->
+  <div *ngIf="loading">
+    <p>加载中... <span class="spinner">🔄</span></p>
+  </div>
+
+  <!-- 空数据状态 -->
+  <div *ngIf="!loading && tasks.length === 0">
     <p>No tasks available. Click "Add Task" to create one!</p>
   </div>
 
-  <ng-template #taskList>
-    <table>
+  <!-- 有数据状态 -->
+  <div *ngIf="!loading && tasks.length > 0">
+    <table class="task-table">
       <thead>
         <tr>
           <th>Title</th>
@@ -25,15 +32,11 @@
           <td>{{ task.dueDate | date: 'shortDate' }}</td>
           <td>{{ task.completed ? '✅ Done' : '⏳ Pending' }}</td>
           <td>
-            <button [routerLink]="['/tasks/edit', task.id]" class="edit-btn">
-              Edit
-            </button>
-            <button (click)="deleteTask(task.id)" class="delete-btn">
-              Delete
-            </button>
+            <button [routerLink]="['/tasks/edit', task.id]" class="edit-btn">Edit</button>
+            <button (click)="deleteTask(task.id)" class="delete-btn">Delete</button>
           </td>
         </tr>
       </tbody>
     </table>
-  </ng-template>
+  </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../task.service';
@@ -20,14 +20,23 @@ export class TaskEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private taskService: TaskService,
-    private router: Router
+    private router: Router,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.taskId = this.route.snapshot.paramMap.get('id')!;
-    this.taskService.getTaskById(this.taskId).subscribe((task) => {
+    console.log('Editing task with ID:', this.taskId);
+    this.taskService.getTaskById(this.taskId).subscribe({
+    next: (task) => {
+      console.log('✅ 成功获取任务:', task);
       this.task = task;
-    });
+      this.cd.markForCheck(); // ✅ 强制 Angular 检查视图
+    },
+    error: (err) => {
+      console.error('❌ 获取任务失败:', err);
+    }
+  });
   }
 
   /** Save updated task */

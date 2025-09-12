@@ -1,50 +1,45 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Task } from './models/task.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class TaskService {
-  private tasksUrl = 'api/tasks'; // URL to web API
+  private tasksUrl = 'api/tasks';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
   constructor(private http: HttpClient) {}
 
-  /** GET all tasks */
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.tasksUrl).pipe(
       catchError(this.handleError<Task[]>('getTasks', []))
     );
   }
 
-  /** GET task by id */
   getTaskById(id: string): Observable<Task> {
     const url = `${this.tasksUrl}/${id}`;
     return this.http.get<Task>(url).pipe(
-      catchError(this.handleError<Task>(`getTaskById id=${id}`))
+      catchError(this.handleError<Task>(`getTaskById id=${id}` as const))
     );
   }
 
-  /** POST: add a new task */
-  addTask(task: Task): Observable<Task> {
+  addTask(task: Omit<Task, 'id'>): Observable<Task> {
+    // let the in-memory server assign id; you don’t need to set it here
     return this.http.post<Task>(this.tasksUrl, task, this.httpOptions).pipe(
       catchError(this.handleError<Task>('addTask'))
     );
   }
 
-  /** PUT: update an existing task */
-  updateTask(task: Task): Observable<any> {
-    return this.http.put(this.tasksUrl, task, this.httpOptions).pipe(
-      catchError(this.handleError<any>('updateTask'))
+  updateTask(task: Task): Observable<Task> {
+    const url = `${this.tasksUrl}/${task.id}`;
+    return this.http.put<Task>(url, task, this.httpOptions).pipe(
+      catchError(this.handleError<Task>('updateTask'))
     );
   }
 
-  /** DELETE: delete a task by id */
   deleteTask(id: string): Observable<{}> {
     const url = `${this.tasksUrl}/${id}`;
     return this.http.delete(url, this.httpOptions).pipe(
@@ -52,13 +47,9 @@ export class TaskService {
     );
   }
 
-  /**
-   * Handle HTTP operation that failed.
-   * Let the app continue by returning an empty result.
-   */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.error(`${operation} failed:`, error); // Log to console for now
+      console.error(`${operation} failed:`, error);
       return new Observable<T>((subscriber) => {
         subscriber.next(result as T);
         subscriber.complete();
