@@ -1,15 +1,21 @@
 <div class="task-list-container">
-  <h2>Task List</h2>
+  <h2>
+    <span class="material-icons">checklist</span>
+    Task List
+  </h2>
 
-  <button routerLink="/tasks/add" class="add-btn">+ Add Task</button>
+  <a routerLink="/tasks/add" class="add-btn">
+  <span class="material-icons">add</span>
+  Add Task
+  </a>
 
   <!-- Loading 状态 -->
-  <div *ngIf="loading">
+  <div *ngIf="loading" class="loading-state">
     <p>加载中... <span class="spinner">🔄</span></p>
   </div>
 
   <!-- 空数据状态 -->
-  <div *ngIf="!loading && tasks.length === 0">
+  <div *ngIf="!loading && tasks.length === 0" class="empty-state">
     <p>No tasks available. Click "Add Task" to create one!</p>
   </div>
 
@@ -27,13 +33,25 @@
       </thead>
       <tbody>
         <tr *ngFor="let task of tasks">
-          <td>{{ task.title }}</td>
-          <td>{{ task.description }}</td>
-          <td>{{ task.dueDate | date: 'shortDate' }}</td>
-          <td>{{ task.completed ? '✅ Done' : '⏳ Pending' }}</td>
-          <td>
-            <button [routerLink]="['/tasks/edit', task.id]" class="edit-btn">Edit</button>
-            <button (click)="deleteTask(task.id)" class="delete-btn">Delete</button>
+          <td data-label="Title">{{ task.title }}</td>
+          <td data-label="Description">{{ task.description }}</td>
+          <td data-label="Due Date">{{ task.dueDate | date: 'shortDate' }}</td>
+          <td data-label="Status">
+            <span [class]="'status-badge ' + (task.completed ? 'status-done' : 'status-pending')">
+              {{ task.completed ? 'Done' : 'Pending' }}
+            </span>
+          </td>
+          <td data-label="Actions">
+            <div class="action-buttons">
+              <a [routerLink]="['/tasks/edit', task.id]" class="edit-btn">
+  <span class="material-icons">edit</span>
+  Edit
+</a>
+              <button (click)="deleteTask(task.id)" class="delete-btn">
+                <span class="material-icons">delete</span>
+                Delete
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>

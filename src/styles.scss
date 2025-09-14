@@ -1,36 +1,61 @@
-// Always put @use imports at the very top
-@use '@angular/material' as mat;
+// styles.scss
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&family=Poppins:wght@400;500;600&display=swap');
 
-// Define Material theme
-html {
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+// 修复按钮样式 - 移除边框，添加hover效果
+.task-list-container a.add-btn,
+.task-list-container a.edit-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: #3f51b5 !important;
+  color: white !important;
+  padding: 12px 20px !important;
+  border-radius: 8px !important;
+  text-decoration: none !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  box-shadow: 0 3px 5px rgba(0,0,0,0.2) !important;
+  transition: all 0.3s ease !important;
+  margin-bottom: 24px !important;
+  
+  // 移除红色边框，添加hover效果
+  &:hover {
+    background: #303f9f !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 5px 8px rgba(0,0,0,0.25) !important;
+    color: white !important;
+  }
 }
 
-body {
-  // Default the application to a light color theme
-  color-scheme: light;
+.task-list-container a.add-btn .material-icons,
+.task-list-container a.edit-btn .material-icons {
+  color: white !important;
+  margin-right: 8px !important;
+  font-size: 20px !important;
+}
 
-  // Use Angular Material's system-level CSS variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
+// 专门为编辑按钮设置样式（在表格内）
+.task-list-container .action-buttons a.edit-btn {
+  padding: 8px 16px !important;
+  font-size: 14px !important;
+  margin-bottom: 0 !important;
+}
 
-  // Reset the user agent margin
+// 全局字体设置
+* {
   margin: 0;
-}
-
-// ✅ Add your own global styles after the theme
-html, body {
-  height: 100%;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+  color: #212121;
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 20px;
 }
