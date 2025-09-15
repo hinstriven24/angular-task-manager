@@ -1,33 +1,49 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <mat-form-field appearance="fill">
-    <mat-label>Title</mat-label>
-    <input matInput formControlName="title" required />
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="task-form">
+  <!-- Title Field -->
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Task Title</mat-label>
+    <input matInput formControlName="title" placeholder="Enter a descriptive title" required>
+    <mat-icon matPrefix class="field-icon">title</mat-icon>
+    <mat-error *ngIf="form.get('title')?.hasError('required')">
+      📝 Title is required
+    </mat-error>
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
+  <!-- Description Field -->
+  <mat-form-field appearance="outline" class="form-field">
     <mat-label>Description</mat-label>
-    <textarea matInput formControlName="description"></textarea>
+    <textarea matInput formControlName="description" placeholder="Describe your task in detail..." rows="4"></textarea>
+    <mat-icon matPrefix class="field-icon">description</mat-icon>
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
+  <!-- Due Date Field -->
+  <mat-form-field appearance="outline" class="form-field">
     <mat-label>Due Date</mat-label>
-    <input matInput [matDatepicker]="picker" formControlName="dueDate" />
+    <input matInput [matDatepicker]="picker" formControlName="dueDate">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
+    <mat-icon matPrefix class="field-icon">event</mat-icon>
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
-  <mat-label>Status</mat-label>
-  <mat-select formControlName="completed">
-    <mat-option [value]="false">⏳ Pending</mat-option>
-    <mat-option [value]="true">✅ Done</mat-option>
-  </mat-select>
-</mat-form-field>
+  <!-- Status Field -->
+  <div class="status-section">
+  <mat-label class="status-label">Task Status</mat-label>
+  <mat-checkbox formControlName="completed" class="status-checkbox" color="primary">
+    <span class="status-text">
+      {{ form.get('completed')?.value ? 'Completed' : 'Pending' }}
+    </span>
+  </mat-checkbox>
+</div>
 
-  <div class="actions">
-    <button mat-raised-button color="primary" type="submit">
+  <!-- Action Buttons -->
+  <div class="form-actions">
+    <button type="button" mat-stroked-button (click)="onCancel()" class="cancel-btn">
+      <mat-icon>arrow_back</mat-icon>
+      Cancel
+    </button>
+    <button type="submit" mat-raised-button [disabled]="!form.valid" class="submit-btn">
+      <mat-icon>{{ submitLabel.includes('Update') ? 'update' : 'add_task' }}</mat-icon>
       {{ submitLabel }}
     </button>
-    <button mat-button type="button" (click)="onCancel()">Cancel</button>
   </div>
 </form>

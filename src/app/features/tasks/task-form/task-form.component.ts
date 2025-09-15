@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select'; // 确保导入 MatSelectModule
+import { MatIconModule  } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Task } from '../models/task.model';
 
 @Component({
@@ -23,6 +25,8 @@ import { Task } from '../models/task.model';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule, // ← 必须导入
+    MatIconModule ,
+    MatCheckboxModule
   ],
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.scss'],
